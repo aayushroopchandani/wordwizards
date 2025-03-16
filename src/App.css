@@ -36,3 +36,17 @@
     transform: rotate(360deg);
   }
 }
+nav{
+  display: flex;
+  gap: 32px;
+}
+nav li{
+  list-style: none;
+}
+.logo{
+  width: 70px;
+  border-radius: 50%;
+}
+.content{
+  display: flex;
+}
