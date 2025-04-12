@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 // import tickIcon from "./tick.svg";
-export default function TextForm({ heading, mode,showAlert }) {
+export default function TextForm({ heading, mode, showAlert }) {
     // const [styBox, setStyBox] = useState({ height: "300px", width: "50%" });
 
     // const toggle=()=>{
@@ -26,12 +26,12 @@ export default function TextForm({ heading, mode,showAlert }) {
 
     const handleUpClick = () => {
         setText(text.toUpperCase());
-        showAlert('Converted to Uppercase','success');
+        showAlert('Converted to Uppercase', 'success');
     };
 
     const handleLowClick = () => {
         setText(text.toLowerCase());
-        showAlert('Converted to Lowercase','success');
+        showAlert('Converted to Lowercase', 'success');
 
     };
 
@@ -46,7 +46,7 @@ export default function TextForm({ heading, mode,showAlert }) {
 
     const handleReplace = () => {
         setText(text.replace(new RegExp(inputFind, "gi"), inputReplace));
-        showAlert(`"${inputFind}" is replaced by "${inputReplace}"`,"success");
+        showAlert(`"${inputFind}" is replaced by "${inputReplace}"`, "success");
     };
 
     const handleCopy = () => {
@@ -60,7 +60,7 @@ export default function TextForm({ heading, mode,showAlert }) {
             setCopyText('Copy');
 
         }, 3000);
-        showAlert('Copied to Clipboard!','success');
+        showAlert('Copied to Clipboard!', 'success');
     };
 
     const handleSpaces = () => {
@@ -73,6 +73,8 @@ export default function TextForm({ heading, mode,showAlert }) {
       color: lightgray;
     }
   `;
+    let word = text === '' ? 0 : countOccurences(text.trim().replace(/\s+/g, " "), " ") + 1;
+
     return (
         <>
             <style>{dynamicStyles}</style>
@@ -88,10 +90,10 @@ export default function TextForm({ heading, mode,showAlert }) {
 
                     }}></textarea>
                     <div className='my-3 d-flex gap-3 flex-wrap align-items-center justify-content-center'>
-                        <button className={`btn btn${mode === 'light' ? '-outline' : ''}-secondary`} onClick={handleUpClick}>Convert to Uppercase</button>
-                        <button className={`btn btn${mode === 'light' ? '-outline' : ''}-secondary`} onClick={handleLowClick}>Convert to Lowercase</button>
+                        <button disabled={text.length === 0} className={`btn btn${mode === 'light' ? '-outline' : ''}-secondary`} onClick={handleUpClick}>Convert to Uppercase</button>
+                        <button disabled={text.length === 0} className={`btn btn${mode === 'light' ? '-outline' : ''}-secondary`} onClick={handleLowClick}>Convert to Lowercase</button>
                         <div className="dropdown">
-                            <button className={`btn btn${mode === 'light' ? '-outline' : ''}-secondary dropdown-toggle`} type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <button disabled={text.length === 0} className={`btn btn${mode === 'light' ? '-outline' : ''}-secondary dropdown-toggle`} type="button" data-bs-toggle="dropdown" aria-expanded="false">
                                 Find & Replace
                             </button>
                             <ul className="dropdown-menu">
@@ -104,18 +106,17 @@ export default function TextForm({ heading, mode,showAlert }) {
                                 </div>
                             </ul>
                         </div>
-                        <button className={`btn btn${mode === 'light' ? '-outline' : ''}-secondary`} onClick={handleSpaces}>Remove extra spaces</button>
-                        <button className={`btn btn${mode === 'light' ? '-outline' : ''}-secondary`} onClick={() => setText("")}>Clear Text</button>
-                        <button className="p-1" onClick={handleCopy} id='copy' style={{ border: '1px solid grey', color: `${mode === 'dark' ? 'white' : 'grey'}`, backgroundColor: `${mode === 'dark' ? '#6c757d' : 'white'}`, borderRadius: '5px' }}><img src={copy} alt="Copy" />{copyText}</button>
+                        <button disabled={text.length === 0} className={`btn btn${mode === 'light' ? '-outline' : ''}-secondary`} onClick={handleSpaces}>Remove extra spaces</button>
+                        <button disabled={text.length === 0} className={`btn btn${mode === 'light' ? '-outline' : ''}-secondary`} onClick={() => setText("")}>Clear Text</button>
+                        <button disabled={text.length === 0} className="p-1" onClick={handleCopy} id='copy' style={{ border: '1px solid grey', color: `${mode === 'dark' ? 'white' : 'grey'}`, backgroundColor: `${mode === 'dark' ? '#6c757d' : 'white'}`, borderRadius: '5px' }}><img src={copy} alt="Copy" />{copyText}</button>
 
                     </div>
                     <div className="container my-4 d-flex flex-column justify-content-center align-items-center">
                         <h2>Your Text Analysis</h2>
-                        <p>{text === '' ? '0' : countOccurences(text.trim().replace(/\s+/g, " "), " ") + 1} {text.indexOf(" ") === -1 ? 'word' : 'words'}</p>
+                        <p>{word} {(word===0||word===1) ? 'word' : 'words'}</p>
                         <p>{text.trim().length} characters(including spaces)</p>
                         <p>{text.length - countOccurences(text, " ")} characters(without spaces)</p>
-                        <p> Time to read {Math.round(((countOccurences(text, " ") + 1) / 125) * 100) / 100} minutes(slow reader approx)</p>
-                        <p> Time to read {Math.round(((countOccurences(text, " ") + 1) * 0.0032) * 100) / 100} minutes(Average person approx)</p>
+
                         {/* Math.round(num * 100) / 100; */}
                     </div>
                 </div>

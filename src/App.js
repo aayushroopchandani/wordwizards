@@ -1,7 +1,7 @@
 import './App.css';
 import React, { useState } from 'react';
-// import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-// import About from './components/About';
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import About from './components/About';
 import NavBar from './components/NavBar';
 import Alert from './components/AlertMessage';
 
@@ -36,16 +36,16 @@ function App() {
   };
   return (
     <>
-      {/* <Router> */}
+      <Router>
         <NavBar title="WordWizard" aboutText="About" mode={mode} toggleMode={toggleMode} />
         <Alert alert={alert} />
-        {/* <Routes> */}
-          {/* <Route path="/" element={ */}
+        <Routes>
+          <Route exact path="/" element={
             <TextForm showAlert={showAlert} heading="WordWizard – Transform, Analyze, and Elevate Your Text!🚀✨" mode={mode} />
-          {/*  } /> */}
-          {/* <Route path="/about" element={<About mode={mode}/>} />
-        </Routes> */}
-      {/* </Router> */}
+           } />
+          <Route exact path="/about" element={<About mode={mode}/>} />
+        </Routes>
+      </Router>
     </>
   );
 }
