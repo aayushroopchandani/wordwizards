@@ -216,7 +216,7 @@ function NavBar({ title = "set title", aboutText = "about", mode, toggleMode }) 
                 value="option2"
                 checked={selectedOption === "option2"}
                 onChange={handleChange}
-              // onClick={console.log(selectedOption)}
+              // onClick={console.log(selectedOption),change}
 
               />
               <label className="form-check-label" htmlFor="option2">
